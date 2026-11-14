@@ -546,7 +546,7 @@ function ctx0(){
  return{A,B:[cur],al:rl+' 평균',bl:ms+'월',ttl:`${ms}월은 ${rl} 평균보다`,basis:ms+'월 값',tr:id=>idx.map(i=>R(id)[i]),tl:idx.map(i=>D.months[i]),avgLine:true,A_ids:A,unit:'월'}}
 function render(){
  const o=$('#out');
- o.classList.toggle('sheetp',st.mode==='sheet');const em=st.mode==='man'||st.mode==='mk';o.classList.toggle('manp',em);document.body.classList.toggle('shp',st.mode==='sheet'||em);if(em){o.innerHTML='<iframe id="manf" title="'+(st.mode==='mk'?'뱅셀 월마감 제작 매뉴얼':'봄이가족 재무 에이전트 사용 매뉴얼')+'"></iframe>';$('#manf').srcdoc=$(st.mode==='mk'?'#mkdoc':'#mandoc').textContent.replace(/<\\\//g,'</');return}if(st.mode==='all'||st.mode==='cum'){o.innerHTML=`<div class="pg">${(st.mode==='cum'?cumView():allView()).split('\u0001')[PG().k]||''}</div>`;return}
+ o.classList.toggle('sheetp',st.mode==='sheet');const em=st.mode==='man'||st.mode==='mk';o.classList.toggle('manp',em);document.body.classList.toggle('shp',st.mode==='sheet'||em);if(em){o.innerHTML='<iframe id="manf" title="'+(st.mode==='mk'?'뱅셀 월마감 제작 매뉴얼':'봄이 가족 재무 에이전트 사용 매뉴얼')+'"></iframe>';$('#manf').srcdoc=$(st.mode==='mk'?'#mkdoc':'#mandoc').textContent.replace(/<\\\//g,'</');return}if(st.mode==='all'||st.mode==='cum'){o.innerHTML=`<div class="pg">${(st.mode==='cum'?cumView():allView()).split('\u0001')[PG().k]||''}</div>`;return}
  if(st.mode==='sheet'){xMount(o);return}
  const c=ctx(),a=id=>avg(id,c.A),b=id=>avg(id,c.B),d7=b(7)-a(7);
  const cats=[['전체 결과',7],['월급−쓴 돈',8],['집(쉐어) 사업',23],['투자',96]];
