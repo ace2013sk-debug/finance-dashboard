@@ -158,6 +158,30 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 @media(prefers-reduced-motion:no-preference){.kp,.card{animation:pop .25s ease-out}@keyframes pop{from{transform:translateY(4px);opacity:.4}to{transform:none;opacity:1}}}
 #tg option{background:#fff;color:var(--ink)}
 #out.manp{display:flex;flex-direction:column;overflow:hidden}#manf{flex:1;width:100%;min-height:200px;border:5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);background:#fff}
+/* ===== 챗봇: 자주 하는 질문 10개 · 상세 페이지 이동 · 이동/크기 조절 ===== */
+#cbL{position:fixed;right:18px;bottom:18px;z-index:50;font:inherit;font-weight:900;font-size:15px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 16px;cursor:pointer}
+#cbL:hover{background:var(--mint)}
+#cbP{position:fixed;z-index:51;display:none;flex-direction:column;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);min-width:260px;min-height:300px;max-width:96vw;max-height:96vh;overflow:hidden}
+#cbP.on{display:flex}
+#cbH{flex:none;display:flex;align-items:center;gap:8px;background:var(--yel);border-bottom:3px solid var(--ink);padding:8px 10px;cursor:move;touch-action:none;user-select:none;font-weight:900}
+#cbH .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cbH .g{font-size:11px;font-weight:700;background:#fff;border:2px solid var(--ink);padding:0 5px}
+#cbX{font:inherit;font-weight:900;border:2px solid var(--ink);background:#fff;cursor:pointer;width:28px;height:28px;line-height:1;padding:0}
+#cbX:hover{background:var(--ora)}
+#cbM{flex:1;min-height:0;overflow:auto;padding:10px;background:var(--bg);display:flex;flex-direction:column;gap:8px}
+.cbm{max-width:92%;padding:8px 10px;border:2px solid var(--ink);font-size:14px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+.cbm.b{align-self:flex-start;background:#fff}
+.cbm.u{align-self:flex-end;background:var(--pur)}
+.cbm .go{display:block;margin-top:8px;font:inherit;font-weight:800;font-size:13px;border:2px solid var(--ink);background:var(--mint);box-shadow:2px 2px 0 var(--ink);padding:4px 10px;cursor:pointer;color:var(--ink)}
+.cbm .go:hover{background:var(--yel)}
+#cbQ{flex:none;max-height:34%;overflow:auto;border-top:3px solid var(--ink);padding:8px;display:flex;flex-wrap:wrap;gap:6px;background:#fff}
+#cbQ button{font:inherit;font-weight:700;font-size:12.5px;border:2px solid var(--ink);background:#fff;cursor:pointer;padding:3px 8px;color:var(--ink);text-align:left}
+#cbQ button:hover{background:var(--yel)}
+#cbF{flex:none;display:flex;gap:6px;border-top:3px solid var(--ink);padding:8px;background:#fff}
+#cbF input{flex:1;min-width:0;font:inherit;font-size:14px;border:2px solid var(--ink);padding:6px 8px}
+#cbF button{font:inherit;font-weight:800;border:2px solid var(--ink);background:var(--yel);cursor:pointer;padding:6px 12px;color:var(--ink)}
+#cbR{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,var(--ink) 50%,var(--ink) 58%,transparent 58%,transparent 72%,var(--ink) 72%,var(--ink) 80%,transparent 80%)}
+@media(max-width:600px){#cbL{right:10px;bottom:10px}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="coinie" viewBox="0 0 100 100" data-c="1"><circle cx="50" cy="52" r="34" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="50" cy="52" r="25" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5"/><circle cx="41" cy="50" r="3.5" fill="#0A0A0A"/><circle cx="59" cy="50" r="3.5" fill="#0A0A0A"/><path d="M44 58 Q50 64 56 58" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="35" cy="57" r="3" fill="#FFB4B4"/><circle cx="65" cy="57" r="3" fill="#FFB4B4"/></symbol>
@@ -930,4 +954,45 @@ function postRender(){buildSide();$('#dots').innerHTML=PAGES.map((p,i)=>`<button
   s.querySelectorAll('text.val').forEach(r=>{r.style.setProperty('--i',Math.min(j++,10))});s.querySelectorAll('circle').forEach(r=>{r.style.setProperty('--i',Math.min(k++,80))})})}
 {const r0=render;render=function(){r0();postRender()}}
 fillTg();render();
-</script><div id="xcm"></div></body></html>
+
+/* ===== 챗봇 ===== */
+document.addEventListener('DOMContentLoaded',function(){
+const FAQ=[
+{q:'전체 자산은 어떻게 쌓여 왔나요?',a:'2019년 1월부터 현재까지의 누적 금액 추이와 연도별 누적(월급·사업·투자 수입)을 첫 화면에서 볼 수 있습니다.',p:0,k:['전체','누적','자산','요약','추이']},
+{q:'누적 기준과 평균 기준은 무엇이 다른가요?',a:'누적 기준은 연 단위로만 입력된 값을 12월에 반영해 연 소계와 맞춥니다. 평균 기준은 월별 값의 월평균이며 시트의 연 소계 열과 다릅니다. 외부 전달 전에 어느 기준인지 확인해 주십시오.',p:9,k:['평균','기준','차이','월평균']},
+{q:'근로소득(월급)은 어디서 보나요?',a:'근로소득의 흐름과 세부 항목을 누적 기준 2쪽, 평균 기준 11쪽에서 확인할 수 있습니다.',p:1,k:['근로','월급','급여','소득']},
+{q:'사업소득은 어디서 보나요?',a:'사업소득의 흐름과 세부 항목을 누적 기준 4쪽, 평균 기준 13쪽에서 확인할 수 있습니다.',p:3,k:['사업','매출','장사']},
+{q:'주식 투자 성과는 어디서 보나요?',a:'주식의 흐름과 세부 내역을 누적 기준 6쪽, 평균 기준 15쪽에서 확인할 수 있습니다.',p:5,k:['주식','투자','증권','수익']},
+{q:'부동산 자산은 어디서 보나요?',a:'부동산의 흐름과 세부 내역을 누적 기준 8쪽, 평균 기준 17쪽에서 확인할 수 있습니다. 시세 상승분은 연 단위로 입력된 값이 12월에 반영됩니다.',p:7,k:['부동산','집','아파트','시세']},
+{q:'이번 달은 지난달보다 어땠나요?',a:'월별 보고서 첫 쪽에 요약과 전월 대비 변화가 있습니다. 상단에서 대상과 비교 기준(전월·연평균)을 바꿀 수 있습니다.',p:18,k:['이번','지난달','전월','월별','변화','비교']},
+{q:'어디에 돈을 가장 많이 썼나요?',a:'월별 보고서의 "쓴 돈·호점"과 "TOP10·확인" 쪽에서 지출 상위 항목을 확인할 수 있습니다.',p:21,k:['지출','쓴','top','탑','호점','소비']},
+{q:'연도별로 비교해 보고 싶어요.',a:'연도별 보고서 4개 쪽에서 연도별 요약, 흐름, 지출, TOP10을 볼 수 있습니다. 연도별 값은 월별 값의 월평균입니다(26년은 1~10월 평균).',p:22,k:['연도','연간','년별','해마다']},
+{q:'숫자의 근거는 어디서 확인하나요?',a:'차트·카드의 숫자를 클릭하면 리뷰 시트의 해당 셀로 이동해 굵은 테두리로 표시됩니다. 사용 방법 전체는 사용 매뉴얼(28쪽)에 있습니다.',p:26,k:['근거','시트','셀','원본','매뉴얼','사용법','단축키','숫자']}
+];
+const $c=s=>document.getElementById(s),P=$c('cbP'),M=$c('cbM'),Q=$c('cbQ'),L=$c('cbL');
+function add(cls,txt,pi){const d=document.createElement('div');d.className='cbm '+cls;const s=document.createElement('span');s.textContent=txt;d.appendChild(s);
+ if(pi!=null){const b=document.createElement('button');b.type='button';b.className='go';b.textContent='상세 페이지 ▶ ('+(pi+1)+'쪽)';b.addEventListener('click',()=>{if(typeof setPage==='function')setPage(pi);if(window.scrollTo)scrollTo(0,0)});d.appendChild(b)}
+ M.appendChild(d);M.scrollTop=M.scrollHeight}
+function ask(f){add('u',f.q);setTimeout(()=>add('b',f.a,f.p),120)}
+FAQ.forEach(f=>{const b=document.createElement('button');b.type='button';b.textContent=f.q;b.addEventListener('click',()=>ask(f));Q.appendChild(b)});
+$c('cbF').addEventListener('submit',e=>{e.preventDefault();const i=$c('cbI'),v=i.value.trim();if(!v)return;i.value='';add('u',v);const l=v.toLowerCase();
+ let best=null,n=0;FAQ.forEach(f=>{const c=f.k.filter(w=>l.includes(w)).length;if(c>n){n=c;best=f}});
+ setTimeout(()=>best?add('b',best.a,best.p):add('b','해당 질문을 찾지 못했습니다. 아래 자주 하는 질문에서 선택하시거나 "주식", "부동산", "월별"처럼 핵심 단어로 입력해 주십시오.'),120)});
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+function place(){const r=P.getBoundingClientRect(),w=Math.min(r.width,innerWidth-8),h=Math.min(r.height,innerHeight-8);
+ P.style.width=w+'px';P.style.height=h+'px';P.style.left=cl(r.left,0,innerWidth-w)+'px';P.style.top=cl(r.top,0,innerHeight-h)+'px'}
+function open(o){P.classList.toggle('on',o);L.style.display=o?'none':'';L.setAttribute('aria-expanded',o);
+ if(o){if(!P.style.left){const w=Math.min(380,innerWidth-16),h=Math.min(520,innerHeight-16);P.style.width=w+'px';P.style.height=h+'px';P.style.left=(innerWidth-w-18)+'px';P.style.top=(innerHeight-h-18)+'px'}else place();$c('cbI').focus({preventScroll:true})}}
+L.addEventListener('click',()=>open(true));$c('cbX').addEventListener('click',()=>open(false));
+addEventListener('resize',()=>{if(P.classList.contains('on'))place()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&P.classList.contains('on'))open(false)});
+function drag(h,fn){h.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;e.preventDefault();const r=P.getBoundingClientRect(),sx=e.clientX,sy=e.clientY;h.setPointerCapture(e.pointerId);
+ const mv=ev=>fn(ev.clientX-sx,ev.clientY-sy,r),up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up)};
+ h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up)})}
+drag($c('cbH'),(dx,dy,r)=>{P.style.left=cl(r.left+dx,0,innerWidth-r.width)+'px';P.style.top=cl(r.top+dy,0,innerHeight-r.height)+'px'});
+drag($c('cbR'),(dx,dy,r)=>{P.style.width=cl(r.width+dx,260,innerWidth-r.left)+'px';P.style.height=cl(r.height+dy,300,innerHeight-r.top)+'px'});
+add('b','안녕하세요, 봄이 가족 재무 에이전트 챗봇입니다. 아래 자주 하는 질문을 선택해 주십시오. 답변의 "상세 페이지" 버튼을 누르면 해당 내용이 있는 쪽으로 이동합니다.');
+});
+</script><button id="cbL" type="button" aria-haspopup="dialog" aria-controls="cbP" aria-expanded="false">💬 챗봇</button>
+<section id="cbP" role="dialog" aria-label="재무 에이전트 챗봇"><div id="cbH"><span class="t">💬 봄이 챗봇</span><span class="g">끌어서 이동</span><button id="cbX" type="button" aria-label="챗봇 닫기">✕</button></div><div id="cbM" aria-live="polite"></div><div id="cbQ" aria-label="자주 하는 질문"></div><form id="cbF" autocomplete="off"><input id="cbI" type="text" placeholder="질문을 입력하세요 (예: 주식, 부동산)" aria-label="질문 입력"><button type="submit">보내기</button></form><div id="cbR" role="separator" aria-label="크기 조절" title="끌어서 크기 조절"></div></section>
+<div id="xcm"></div></body></html>
