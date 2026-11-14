@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>재무 대시보드</title>
+<title>봄이가족 재무 에이전트</title>
 <style>
 /* 레이아웃: 상단 선택줄 + 요약 카드 + 차트 그리드(a11 네오브루탈 팔레트) */
 :root{--bg:#FBF7EF;--ink:#0A0A0A;--mut:#4a4a4a;--card:#fff;--yel:#FFE81A;--pur:#BF8CFF;--mint:#7EF0A5;--ora:#FF6B45;--grid:#d9d3c4}
@@ -163,7 +163,7 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 <div id="out"></div>
 <div class="ground" aria-hidden="true"><svg viewBox="0 0 100 100" style="left:3.0%"><use href="#tree"/></svg><svg viewBox="0 0 100 100" style="left:19.4%"><use href="#flower"/></svg><svg viewBox="0 0 100 100" style="left:35.8%"><use href="#duck"/></svg><svg viewBox="0 0 100 100" style="left:52.2%"><use href="#house"/></svg><svg viewBox="0 0 100 100" style="left:68.6%"><use href="#flower"/></svg><svg viewBox="0 0 100 100" style="left:85.0%"><use href="#tree"/></svg></div>
 <p class="note">차트·카드의 숫자를 클릭하면 리뷰 시트의 해당 셀로 이동해 검정 굵은 테두리로 표시됩니다. 금액은 만 원 단위의 실제 금액입니다. 월별은 시트의 월 열, 연도별은 월별 값의 월평균입니다(26년은 1~10월 평균). 평균 기준 분석은 시트의 연 소계 열과 다르고, 누적 기준 분석은 연 단위로만 입력된 값을 12월에 반영해 연 소계와 맞춥니다. 외부 전달 전에 확인해 주십시오.</p>
-</div><div id="tip"></div><script type="text/plain" id="mandoc"><!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>재무 대시보드 사용 매뉴얼<\/title><style>:root{--yellow:#FFE81A;--purple:#BF8CFF;--mint:#7EF0A5;--orange:#FF6B45;--cream:#FBF7EF;--ink:#0A0A0A;--bw:5px;--sh:8px;--sbw:clamp(150px,16vw,210px);--s:1;--ox:0px;--oy:0px}
+</div><div id="tip"></div><script type="text/plain" id="mandoc"><!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>봄이가족 재무 에이전트 사용 매뉴얼<\/title><style>:root{--yellow:#FFE81A;--purple:#BF8CFF;--mint:#7EF0A5;--orange:#FF6B45;--cream:#FBF7EF;--ink:#0A0A0A;--bw:5px;--sh:8px;--sbw:clamp(150px,16vw,210px);--s:1;--ox:0px;--oy:0px}
 *{box-sizing:border-box}
 @font-face{font-family:"EmojiOnly";src:local("Apple Color Emoji"),local("Segoe UI Emoji"),local("Noto Color Emoji");unicode-range:U+1F000-1FAFF,U+2600-27BF,U+2B50,U+2B06,U+FE0F,U+200D,U+2728,U+26A1}
 html,body{margin:0;height:100%;overflow:hidden;font-family:"EmojiOnly","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;background:var(--cream);color:var(--ink)}
@@ -246,8 +246,8 @@ body.sb .tb{box-shadow:1px 1px 0 var(--ink);transform:translate(3px,3px)}
 <aside class="sidebar" id="sb" aria-label="목차"><span class="tag">📚 목차<\/span><div id="sbl"><\/div><\/aside>
 <div class="stage" id="stage"><div class="tool"><div class="dots" id="dots" role="group" aria-label="쪽 이동"><\/div><button class="tb" id="sbt" aria-expanded="true" aria-label="사이드바 접기·열기">☰ 목록<\/button><div class="seg"><button class="tb2" id="prv" aria-label="이전 쪽">◀ 이전<\/button><button class="tb2" id="nxt" aria-label="다음 쪽">다음 ▶<\/button><\/div><\/div>
 <section class="slide" data-group="도입" data-title="표지 · 사용 매뉴얼" style="background:#FFE81A"><div class="frame cover">
-<span class="tag">📘 재무 대시보드 · 사용 매뉴얼 · 튜토리얼<\/span>
-<h1 class="big h1 wh">재무 대시보드<br>사용 매뉴얼<\/h1>
+<span class="tag">📘 봄이가족 재무 에이전트 · 사용 매뉴얼 · 튜토리얼<\/span>
+<h1 class="big h1 wh">봄이가족 재무 에이전트<br>사용 매뉴얼<\/h1>
 <p class="lead2">만든 사람이 아니어도 괜찮아요. 10쪽이면 모든 쪽·차트·기능을 따라 할 수 있어요.<\/p>
 <div class="box c" style="display:inline-block;margin-top:18px">📅 데이터 기준: 2019년 1월 ~ 2026년 10월 · 금액 단위: 만 원<\/div>
 <div class="cast lg"><div class="chr" style="left:0;top:40px;width:250px;height:250px"><div class="bd" style="background:#CFE3FA"><\/div><svg viewBox="0 0 100 100"><use href="#house"/><\/svg><\/div><div class="chr" style="left:230px;top:130px;width:180px;height:180px"><div class="bd" style="background:#FFDCDC"><\/div><svg viewBox="0 0 100 100"><use href="#girl"/><\/svg><\/div><div class="chr" style="left:130px;top:250px;width:170px;height:170px"><div class="bd" style="background:#CFE3FA"><\/div><svg viewBox="0 0 100 100"><use href="#boy"/><\/svg><\/div><div class="chr" style="left:330px;top:10px;width:130px;height:130px"><div class="bd" style="background:#FFE29A"><\/div><svg viewBox="0 0 100 100"><use href="#coinie"/><\/svg><\/div><\/div>
@@ -536,7 +536,7 @@ function ctx0(){
  return{A,B:[cur],al:rl+' 평균',bl:ms+'월',ttl:`${ms}월은 ${rl} 평균보다`,basis:ms+'월 값',tr:id=>idx.map(i=>R(id)[i]),tl:idx.map(i=>D.months[i]),avgLine:true,A_ids:A,unit:'월'}}
 function render(){
  const o=$('#out');
- o.classList.toggle('sheetp',st.mode==='sheet');const em=st.mode==='man'||st.mode==='mk';o.classList.toggle('manp',em);document.body.classList.toggle('shp',st.mode==='sheet'||em);if(em){o.innerHTML='<iframe id="manf" title="'+(st.mode==='mk'?'뱅셀 월마감 제작 매뉴얼':'재무 대시보드 사용 매뉴얼')+'"></iframe>';$('#manf').srcdoc=$(st.mode==='mk'?'#mkdoc':'#mandoc').textContent.replace(/<\\\//g,'</');return}if(st.mode==='all'||st.mode==='cum'){o.innerHTML=`<div class="pg">${(st.mode==='cum'?cumView():allView()).split('\u0001')[PG().k]||''}</div>`;return}
+ o.classList.toggle('sheetp',st.mode==='sheet');const em=st.mode==='man'||st.mode==='mk';o.classList.toggle('manp',em);document.body.classList.toggle('shp',st.mode==='sheet'||em);if(em){o.innerHTML='<iframe id="manf" title="'+(st.mode==='mk'?'뱅셀 월마감 제작 매뉴얼':'봄이가족 재무 에이전트 사용 매뉴얼')+'"></iframe>';$('#manf').srcdoc=$(st.mode==='mk'?'#mkdoc':'#mandoc').textContent.replace(/<\\\//g,'</');return}if(st.mode==='all'||st.mode==='cum'){o.innerHTML=`<div class="pg">${(st.mode==='cum'?cumView():allView()).split('\u0001')[PG().k]||''}</div>`;return}
  if(st.mode==='sheet'){xMount(o);return}
  const c=ctx(),a=id=>avg(id,c.A),b=id=>avg(id,c.B),d7=b(7)-a(7);
  const cats=[['전체 결과',7],['월급−쓴 돈',8],['집(쉐어) 사업',23],['투자',96]];
