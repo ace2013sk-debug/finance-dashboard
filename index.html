@@ -525,7 +525,7 @@ function line(vals,labs,opt={}){const W=opt.w||640,H=opt.h||200,pl=opt.pl||44,pr
  return s+'</svg>'}
 const lg=(a,b)=>`<div class="lg"><span><i style="background:${C.A}"></i>${esc(a)}</span><span><i style="background:${C.B}"></i>${esc(b)}</span></div>`;
 const card=(t,sub,body,cls='',sc='sc')=>`<section class="card ${cls}"><h2>${t}</h2>${sub?`<p class="sub">${sub}</p>`:''}<div class="${sc}">${body}</div></section>`;
-const st={mode:'all',tg:'26.10',cmp:'prev',page:0};
+const st={mode:'cum',tg:'26.10',cmp:'prev',page:0};
 const MT=['25.12','26.1','26.2','26.3','26.4','26.5','26.6','26.7','26.8','26.9','26.10'],YT=[20,21,22,23,24,25,26];
 function ctx(){const c=ctx0();let ca,cb,cd,tc;
  if(st.mode==='year'){const y=+st.tg;ca=YAc(y-1);cb=YAc(y);cd=YDc(y);tc=[];for(let k=Math.max(19,y-5);k<=y;k++)tc.push(YAc(k))}
@@ -892,13 +892,13 @@ document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.tar
 
 /* ===== a11: 사이드바(2단계 메뉴) · 타자기 제목 · 숫자 올라감 · 차트 효과 ===== */
 const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-const GRP=[['평균 기준 분석','#BF8CFF'],['누적 기준 분석','#7EF0A5'],['월별 보고서','#FFE81A'],['연도별 보고서','#FF6B45'],['리뷰 시트','#CFE3FA'],['사용 매뉴얼','#FFDCDC'],['제작 매뉴얼','#FFE29A']];
+const GRP=[['누적 기준 분석','#7EF0A5'],['평균 기준 분석','#BF8CFF'],['월별 보고서','#FFE81A'],['연도별 보고서','#FF6B45'],['리뷰 시트','#CFE3FA'],['사용 매뉴얼','#FFDCDC'],['제작 매뉴얼','#FFE29A']];
 const PAGES=[];const addP=(g,t,mode,k)=>PAGES.push({g,t,mode,k});
-['📊 전체 요약'].forEach(x=>addP(0,x,'all',0));
-addP(0,'💼 근로소득 ① 흐름','all',1);addP(0,'💼 근로소득 ② 세부','all',2);addP(0,'🏠 사업소득 ① 흐름','all',3);addP(0,'🏠 사업소득 ② 세부','all',4);
-addP(0,'📈 주식 ① 흐름','all',5);addP(0,'📈 주식 ② 세부','all',6);addP(0,'🏢 부동산 ① 흐름','all',7);addP(0,'🏢 부동산 ② 세부','all',8);
-addP(1,'📊 전체 요약','cum',0);addP(1,'💼 근로소득 ① 흐름','cum',1);addP(1,'💼 근로소득 ② 세부','cum',2);addP(1,'🏠 사업소득 ① 흐름','cum',3);addP(1,'🏠 사업소득 ② 세부','cum',4);
-addP(1,'📈 주식 ① 흐름','cum',5);addP(1,'📈 주식 ② 세부','cum',6);addP(1,'🏢 부동산 ① 흐름','cum',7);addP(1,'🏢 부동산 ② 세부','cum',8);
+addP(0,'📊 전체 요약','cum',0);addP(0,'💼 근로소득 ① 흐름','cum',1);addP(0,'💼 근로소득 ② 세부','cum',2);addP(0,'🏠 사업소득 ① 흐름','cum',3);addP(0,'🏠 사업소득 ② 세부','cum',4);
+addP(0,'📈 주식 ① 흐름','cum',5);addP(0,'📈 주식 ② 세부','cum',6);addP(0,'🏢 부동산 ① 흐름','cum',7);addP(0,'🏢 부동산 ② 세부','cum',8);
+['📊 전체 요약'].forEach(x=>addP(1,x,'all',0));
+addP(1,'💼 근로소득 ① 흐름','all',1);addP(1,'💼 근로소득 ② 세부','all',2);addP(1,'🏠 사업소득 ① 흐름','all',3);addP(1,'🏠 사업소득 ② 세부','all',4);
+addP(1,'📈 주식 ① 흐름','all',5);addP(1,'📈 주식 ② 세부','all',6);addP(1,'🏢 부동산 ① 흐름','all',7);addP(1,'🏢 부동산 ② 세부','all',8);
 ['month','year'].forEach((m,gi)=>{addP(2+gi,'📌 요약·변화',m,0);addP(2+gi,'📈 흐름',m,1);addP(2+gi,'🧾 쓴 돈·호점',m,2);addP(2+gi,'🔎 TOP10·확인',m,3)});
 addP(4,'📑 리뷰 시트','sheet',0);
 addP(5,'📘 사용 매뉴얼','man',0);
