@@ -184,6 +184,9 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 #cbF{flex:none;display:flex;gap:6px;border-top:3px solid var(--ink);padding:8px;background:#fff}
 #cbF input{flex:1;min-width:0;font:inherit;font-size:14px;border:2px solid var(--ink);padding:6px 8px}
 #cbF button{font:inherit;font-weight:800;border:2px solid var(--ink);background:var(--yel);cursor:pointer;padding:6px 12px;color:var(--ink)}
+.cbm.rich{width:98%;max-width:98%}.cbp{margin:0 0 6px}.cbp:last-child{margin:0}
+.cbc{margin:6px 0;border:2px solid var(--ink);background:#fff;padding:4px}.cbk{font-size:12px;font-weight:700;margin:2px 4px 4px}.cbc svg{display:block;width:100%;height:auto;min-width:0}
+#tip{z-index:60!important}
 #cbR{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,var(--ink) 50%,var(--ink) 58%,transparent 58%,transparent 72%,var(--ink) 72%,var(--ink) 80%,transparent 80%)}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -960,32 +963,96 @@ fillTg();render();
 
 /* ===== 챗봇 ===== */
 document.addEventListener('DOMContentLoaded',function(){
-const FAQ=[
-{q:'2019년 1월부터 2026년 10월까지 자산은 어떻게 쌓여 왔나요?',a:'2019년 1월부터 현재까지의 누적 금액 추이와 연도별 누적(월급·사업·투자 수입)을 첫 화면에서 볼 수 있습니다.',p:0,k:['전체','누적','자산','요약','추이']},
-{q:'2026년 10월 기준, 누적 기준과 평균 기준은 무엇이 다른가요?',a:'누적 기준은 연 단위로만 입력된 값을 12월에 반영해 연 소계와 맞춥니다. 평균 기준은 월별 값의 월평균이며 시트의 연 소계 열과 다릅니다. 외부 전달 전에 어느 기준인지 확인해 주십시오.',p:9,k:['평균','기준','차이','월평균']},
-{q:'2026년 1~10월 근로소득(월급)은 어디서 보나요?',a:'근로소득의 흐름과 세부 항목을 누적 기준 2쪽, 평균 기준 11쪽에서 확인할 수 있습니다.',p:1,k:['근로','월급','급여','소득']},
-{q:'2026년 1~10월 사업소득은 어디서 보나요?',a:'사업소득의 흐름과 세부 항목을 누적 기준 4쪽, 평균 기준 13쪽에서 확인할 수 있습니다.',p:3,k:['사업','매출','장사']},
-{q:'2026년 1~10월 주식 투자 성과는 어디서 보나요?',a:'주식의 흐름과 세부 내역을 누적 기준 6쪽, 평균 기준 15쪽에서 확인할 수 있습니다.',p:5,k:['주식','투자','증권','수익']},
-{q:'2026년 10월 기준 부동산 자산은 어디서 보나요?',a:'부동산의 흐름과 세부 내역을 누적 기준 8쪽, 평균 기준 17쪽에서 확인할 수 있습니다. 시세 상승분은 연 단위로 입력된 값이 12월에 반영됩니다.',p:7,k:['부동산','집','아파트','시세']},
-{q:'2026년 10월은 9월보다 어땠나요?',a:'월별 보고서 첫 쪽에 2026년 10월 요약과 9월 대비 변화가 있습니다. 상단에서 대상과 비교 기준(전월·연평균)을 바꿀 수 있습니다.',p:18,k:['이번','지난달','전월','월별','변화','비교']},
-{q:'2026년 10월에 돈을 가장 많이 쓴 곳은 어디인가요?',a:'월별 보고서(2025년 12월~2026년 10월)의 "쓴 돈·호점"과 "TOP10·확인" 쪽에서 지출 상위 항목을 확인할 수 있습니다.',p:21,k:['지출','쓴','top','탑','호점','소비']},
-{q:'2025년과 2026년(1~10월)을 비교하려면 어떻게 하나요?',a:'연도별 보고서 4개 쪽에서 2025년과 2026년을 포함한 연도별 요약, 흐름, 지출, TOP10을 볼 수 있습니다. 연도별 값은 월별 값의 월평균입니다(26년은 1~10월 평균).',p:22,k:['연도','연간','년별','해마다']},
-{q:'2026년 10월 숫자의 근거는 어디서 확인하나요?',a:'차트·카드의 숫자를 클릭하면 리뷰 시트의 해당 셀로 이동해 굵은 테두리로 표시됩니다. 사용 방법 전체는 사용 매뉴얼(28쪽)에 있습니다.',p:26,k:['근거','시트','셀','원본','매뉴얼','사용법','단축키','숫자']}
-];
 const $c=s=>document.getElementById(s),P=$c('cbP'),M=$c('cbM'),Q=$c('cbQ'),L=$c('cbL');
-function add(cls,txt,pi){const d=document.createElement('div');d.className='cbm '+cls;const s=document.createElement('span');s.textContent=txt;d.appendChild(s);
+/* --- 데이터 계산 도구 (대시보드 D·R·RX·ix·man·sman 재사용) --- */
+const mn=v=>man(v)+'원',sg=v=>sman(v)+'원';
+const Rv=(id,i)=>R(id)[i]||0,Xv=(id,i)=>RX(id)[i]||0;
+const rng=(y,a,b)=>{const o=[];for(let m=a;m<=b;m++)o.push(ix(y,m));return o};
+const S=(id,ids)=>ids.reduce((s,i)=>s+Xv(id,i),0);
+const lab=i=>{const t=D.months[i].split('.');return '20'+t[0]+'년 '+t[1]+'월'};
+const cumArr=id=>{let t=0;return D.months.map((m,i)=>t+=Xv(id,i))};
+const colL=n=>{let s='';while(n>0){s=String.fromCharCode(65+(n-1)%26)+s;n=Math.floor((n-1)/26)}return s};
+const upDn=(v,a,b)=>v>=0?a:b;
+const bar1=(cats,o)=>bars(cats.map(([n,v])=>({n,b:[{v,c:v>=0?C.up:C.dn,t:n+': '+won(v)}]})),Object.assign({w:520,h:230,pb:56},o||{}));
+const bar2=(cats,o)=>bars(cats.map(([n,a,b])=>({n,b:[{v:a,c:C.A,t:n+': '+won(a)},{v:b,c:C.B,t:n+': '+won(b)}]})),Object.assign({w:520,h:230,pb:56},o||{}));
+const LN=(vals,labs,o)=>line(vals,labs,Object.assign({w:520,h:190,pl:44,hi:true,col:C.A},o||{}));
+const T=t=>({t}),G=(svg,cap)=>({svg,cap});
+const I26=rng(26,1,10),I25=rng(25,1,10),LA=ix(26,10),PV=ix(26,9);
+const PARTS=[
+ {n:'근로소득',d:'월급 − 쓴 돈',id:8,comps:[[11,'성현 급여'],[12,'지혜 급여'],[13,'성현 상여'],[14,'봄이 지원금'],[15,'쓴 돈']]},
+ {n:'사업소득',d:'집(쉐어)+A&B−이자비용',id:23,comps:[[24,'쉐어 손익'],[81,'A&B 손익'],[91,'이자비용']]},
+ {n:'주식 투자소득',d:'주식 실현수익·대출 이자 등',id:97,comps:[[98,'실현수익_지혜'],[99,'공무원 연금공단대출'],[100,'카카오 신용'],[101,'KB_성현 신용 1.0억'],[102,'KB_성현 신용 0.3억'],[103,'윤가네 지원금'],[104,'양도세 절세']]},
+ {n:'부동산 투자소득',d:'시세상승·투자비용·월세',id:105,comps:[[106,'시세상승'],[107,'투자비용'],[108,'이지더원 월세'],[109,'물건']]}];
+function partAns(P0){const id=P0.id,v26=S(id,I26),s25=S(id,I25),dd=v26-s25,mv=I26.map(i=>Rv(id,i));
+ const out=[T('2026년 1~10월 '+P0.n+' 누적은 '+mn(v26)+', 월평균은 '+mn(v26/10)+'입니다.'),
+  T('전년 같은 기간(2025년 1~10월) '+mn(s25)+'보다 '+sg(dd)+' '+(dd>=0?'늘었습니다.':'줄었습니다.'))];
+ if(mv.some(v=>v!==0)){const hi=mv.indexOf(Math.max(...mv)),lo=mv.indexOf(Math.min(...mv));
+  out.push(T('월별로는 '+(hi+1)+'월이 '+mn(mv[hi])+'으로 가장 높았고, '+(lo+1)+'월이 '+mn(mv[lo])+'으로 가장 낮았습니다.'));
+  out.push(G(LN(mv,I26.map(lab),{title:P0.n+' 월별(2026년, 만 원)'}),'2026년 1~10월 월별 흐름'));
+  const cs=P0.comps.map(([cid,nm])=>[nm,S(cid,I26)]).filter(x=>Math.abs(x[1])>=1);
+  if(cs.length){const top=cs.slice().sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))[0];out.push(T('세부 항목 중 영향이 가장 큰 것은 '+top[0]+'('+mn(top[1])+')입니다.'));out.push(G(bar1(cs,{wk:4}),'세부 항목별 2026년 1~10월 누적(초록=플러스, 주황=마이너스)'))}
+ }else{out.push(T('2026년 1~10월에는 월별로 입력된 값이 없습니다. 연 단위로만 입력되는 값은 해당 연도 12월에 반영됩니다.'))}
+ const ys=[19,20,21,22,23,24,25,26];
+ out.push(G(bar1(ys.map(y=>[y+'년',S(id,rng(y,1,y===26?10:12))]),{wk:4}),'연도별 누적(2026년은 1~10월)'));return out}
+const FAQ=[
+{q:'2019년 1월부터 2026년 10월까지 자산은 어떻게 쌓여 왔나요?',p:0,k:['전체','누적','자산','요약','추이'],fn(){
+ const ca=cumArr(7),ys=[19,20,21,22,23,24,25,26],yt=ys.map(y=>S(7,rng(y,1,y===26?10:12))),bi=yt.indexOf(Math.max(...yt)),xl=[];
+ D.months.forEach((m,i)=>{if(m.endsWith('.1'))xl.push([i,'20'+m.split('.')[0]])});
+ return [T('2019년 1월부터 2026년 10월까지 월별 "한 달 결과"를 쌓은 누적 금액은 '+mn(ca[LA])+'입니다.'),
+  T('연도별로는 2025년 한 해 '+mn(yt[6])+', 2026년 1~10월 '+mn(yt[7])+'이며, 가장 컸던 해는 20'+ys[bi]+'년('+mn(yt[bi])+')입니다.'),
+  G(LN(ca,D.months.map((m,i)=>lab(i)),{xl,h:200,title:'누적 결과(만 원)'}),'2019년 1월부터의 누적 추이'),
+  G(bar1(ys.map((y,i)=>[y+'년',yt[i]]),{wk:4}),'연도별 한 달 결과 누적(2026년은 1~10월)')]}},
+{q:'2026년 10월 기준, 누적 기준과 평균 기준은 무엇이 다른가요?',p:9,k:['평균','기준','차이','월평균'],fn(){
+ const ys=[19,20,21,22,23,24,25,26],n=y=>y===26?10:12,yt=ys.map(y=>S(7,rng(y,1,n(y)))),ya=ys.map((y,i)=>yt[i]/n(y)),dx=D.rows[105].x[ix(25,12)]||0;
+ return [T('누적 기준은 월 값을 더한 합계이고, 평균 기준은 그 합계를 개월 수로 나눈 월평균입니다. 예) 2026년 1~10월 "한 달 결과"는 누적 '+mn(yt[7])+', 월평균 '+mn(ya[7])+'(10개월)입니다.'),
+  T('누적 기준은 연 단위로만 입력된 값(부동산 시세상승 등)을 해당 연도 12월에 반영합니다. 예) 2025년 12월 반영액 '+sg(dx)+'. 평균 기준은 이 값을 반영하지 않아 시트의 연 소계 열과 다릅니다.'),
+  G(bar1(ys.map((y,i)=>[y+'년',yt[i]]),{wk:4}),'누적 기준: 연도별 한 달 결과 합계'),
+  G(bar1(ys.map((y,i)=>[y+'년',ya[i]]),{wk:4}),'평균 기준: 연도별 한 달 결과 월평균')]}},
+{q:'2026년 1~10월 근로소득(월급)은 어디서 보나요?',p:1,k:['근로','월급','급여','소득'],fn(){return partAns(PARTS[0])}},
+{q:'2026년 1~10월 사업소득은 어디서 보나요?',p:3,k:['사업','매출','장사'],fn(){return partAns(PARTS[1])}},
+{q:'2026년 1~10월 주식 투자 성과는 어디서 보나요?',p:5,k:['주식','투자','증권','수익'],fn(){return partAns(PARTS[2])}},
+{q:'2026년 10월 기준 부동산 자산은 어디서 보나요?',p:7,k:['부동산','집','아파트','시세'],fn(){return partAns(PARTS[3])}},
+{q:'2026년 10월은 9월보다 어땠나요?',p:18,k:['이번','지난달','전월','월별','변화','비교','9월'],fn(){
+ const it=[['한 달 결과',7],['월급−쓴 돈',8],['집(쉐어) 사업',23],['투자 수입',96]],cs=it.map(([n,id])=>[n,Rv(id,PV),Rv(id,LA)]);
+ const mv=D.leaf.map(id=>({n:D.rows[id].n,a:Rv(id,PV),b:Rv(id,LA)})).filter(x=>x.a||x.b).sort((x,y)=>Math.abs(y.b-y.a)-Math.abs(x.b-x.a))[0];
+ return [T('2026년 10월 한 달 결과는 '+mn(cs[0][2])+'으로 9월 '+mn(cs[0][1])+'보다 '+sg(cs[0][2]-cs[0][1])+' '+(cs[0][2]>=cs[0][1]?'늘었습니다.':'줄었습니다.')),
+  T(cs.slice(1).map(c=>c[0]+' '+mn(c[1])+' → '+mn(c[2])+'('+sg(c[2]-c[1])+')').join(', ')+'입니다.'),
+  T('변화가 가장 큰 세부 항목은 '+mv.n+'이며 '+mn(mv.a)+' → '+mn(mv.b)+'('+sg(mv.b-mv.a)+')입니다.'),
+  G(bar2(cs,{wk:5}),'보라=2026년 9월, 노랑=2026년 10월 (만 원)')]}},
+{q:'2026년 10월에 돈을 가장 많이 쓴 곳은 어디인가요?',p:21,k:['지출','쓴','top','탑','호점','소비','돈'],fn(){
+ const sp=[['생활비',16],['월세',17],['부부',18],['부부 외',19],['김봄',20]],cs=sp.map(([n,id])=>[n,-Rv(id,PV),-Rv(id,LA)]),tp=cs.slice().sort((a,b)=>b[2]-a[2])[0];
+ const lf=D.leaf.map(id=>({n:D.rows[id].n,v:-Rv(id,LA)})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,6);
+ return [T('2026년 10월 쓴 돈 합계는 '+mn(-Rv(15,LA))+'으로 9월 '+mn(-Rv(15,PV))+'보다 '+sg(-Rv(15,LA)+Rv(15,PV))+' '+(-Rv(15,LA)>=-Rv(15,PV)?'늘었습니다.':'줄었습니다.')+' 항목별로 가장 많은 곳은 '+tp[0]+'('+mn(tp[2])+')입니다.'),
+  G(bar2(cs,{wk:4}),'보라=9월, 노랑=10월 쓴 돈 항목별 (만 원)'),
+  T('세부 항목 중 지출이 큰 곳은 '+lf.slice(0,3).map(x=>x.n+' '+mn(x.v)).join(', ')+' 순입니다(쉐어 사업 비용 포함).'),
+  G(bar1(lf.map(x=>[x.n,x.v]),{wk:5,pb:70}),'2026년 10월 지출 상위 항목 (만 원)')]}},
+{q:'2025년과 2026년(1~10월)을 비교하려면 어떻게 하나요?',p:22,k:['연도','연간','년별','해마다','2025'],fn(){
+ const it=[['한 달 결과',7],['월급−쓴 돈',8],['집(쉐어) 사업',23],['투자 수입',96]],cs=it.map(([n,id])=>[n,S(id,I25),S(id,I26)]);
+ return [T('2025년과 2026년의 같은 기간(1~10월)을 비교하면, '+cs.map(c=>c[0]+' '+mn(c[1])+' → '+mn(c[2])+'('+sg(c[2]-c[1])+')').join(', ')+'입니다.'),
+  G(bar2(cs,{wk:5}),'보라=2025년 1~10월, 노랑=2026년 1~10월 누적 (만 원)'),
+  T('연도별 보고서에서는 상단에서 연도를 고르고 비교 기준(전년·연평균)을 바꿔 볼 수 있습니다. 연도별 값은 월별 값의 월평균입니다.')]}},
+{q:'2026년 10월 숫자의 근거는 어디서 확인하나요?',p:26,k:['근거','시트','셀','원본','매뉴얼','사용법','단축키','숫자'],fn(){
+ const c=colL(8+13*Math.floor(LA/12)+LA%12),c9=colL(8+13*Math.floor(PV/12)+PV%12),r6=rng(26,5,10);
+ return [T('2026년 10월 한 달 결과 '+mn(Rv(7,LA))+'은 리뷰 시트 '+c+'7 셀의 값이고, 9월 '+mn(Rv(7,PV))+'은 '+c9+'7 셀입니다.'),
+  T('대시보드의 숫자·막대를 클릭하면 리뷰 시트의 해당 셀로 이동해 굵은 테두리로 표시됩니다. 사용 방법 전체는 사용 매뉴얼(28쪽)에 있습니다.'),
+  G(bar1(r6.map(i=>[(i%12+1)+'월',Rv(7,i)]),{wk:4}),'2026년 5~10월 한 달 결과 (시트 7행, 만 원)')]}}
+];
+function add(cls,parts,pi){const d=document.createElement('div');d.className='cbm '+cls;
+ parts.forEach(p=>{if(p.t!==undefined){const e=document.createElement('p');e.className='cbp';e.textContent=p.t;d.appendChild(e)}
+  else if(p.svg){d.classList.add('rich');const w=document.createElement('div');w.className='cbc';if(p.cap){const k=document.createElement('div');k.className='cbk';k.textContent=p.cap;w.appendChild(k)}const h=document.createElement('div');h.innerHTML=p.svg;w.appendChild(h);d.appendChild(w)}});
  if(pi!=null){const b=document.createElement('button');b.type='button';b.className='go';b.textContent='상세 페이지 ▶ ('+(pi+1)+'쪽)';b.addEventListener('click',()=>{if(typeof setPage==='function')setPage(pi);if(window.scrollTo)scrollTo(0,0)});d.appendChild(b)}
  M.appendChild(d);M.scrollTop=M.scrollHeight}
-function ask(f){add('u',f.q);setTimeout(()=>add('b',f.a,f.p),120)}
+function answer(f){let parts;try{parts=f.fn()}catch(e){parts=[T('답변을 계산하지 못했습니다. 상세 페이지에서 확인해 주십시오.')]}add('b',parts,f.p)}
+function ask(f){add('u',[T(f.q)]);setTimeout(()=>answer(f),120)}
 FAQ.forEach(f=>{const b=document.createElement('button');b.type='button';b.textContent=f.q;b.addEventListener('click',()=>ask(f));Q.appendChild(b)});
-$c('cbF').addEventListener('submit',e=>{e.preventDefault();const i=$c('cbI'),v=i.value.trim();if(!v)return;i.value='';add('u',v);const l=v.toLowerCase();
+$c('cbF').addEventListener('submit',e=>{e.preventDefault();const i=$c('cbI'),v=i.value.trim();if(!v)return;i.value='';add('u',[T(v)]);const l=v.toLowerCase();
  let best=null,n=0;FAQ.forEach(f=>{const c=f.k.filter(w=>l.includes(w)).length;if(c>n){n=c;best=f}});
- setTimeout(()=>best?add('b',best.a,best.p):add('b','해당 질문을 찾지 못했습니다. 아래 자주 하는 질문에서 선택하시거나 "주식", "부동산", "월별"처럼 핵심 단어로 입력해 주십시오.'),120)});
+ setTimeout(()=>best?answer(best):add('b',[T('해당 질문을 찾지 못했습니다. 아래 자주 하는 질문에서 선택하시거나 "주식", "부동산", "월별"처럼 핵심 단어로 입력해 주십시오.')]),120)});
 const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
 function place(){const r=P.getBoundingClientRect(),w=Math.min(r.width,innerWidth-8),h=Math.min(r.height,innerHeight-8);
  P.style.width=w+'px';P.style.height=h+'px';P.style.left=cl(r.left,0,innerWidth-w)+'px';P.style.top=cl(r.top,0,innerHeight-h)+'px'}
 function open(o){P.classList.toggle('on',o);L.setAttribute('aria-expanded',o);
- if(o){if(!P.style.left){const w=Math.min(380,innerWidth-16),h=Math.min(520,innerHeight-16);P.style.width=w+'px';P.style.height=h+'px';P.style.left=(innerWidth-w-18)+'px';P.style.top=(innerHeight-h-18)+'px'}else place();$c('cbI').focus({preventScroll:true})}}
+ if(o){if(!P.style.left){const w=Math.min(420,innerWidth-16),h=Math.min(560,innerHeight-16);P.style.width=w+'px';P.style.height=h+'px';P.style.left=(innerWidth-w-18)+'px';P.style.top=(innerHeight-h-18)+'px'}else place();$c('cbI').focus({preventScroll:true})}}
 L.addEventListener('click',()=>open(!P.classList.contains('on')));$c('cbX').addEventListener('click',()=>open(false));
 addEventListener('resize',()=>{if(P.classList.contains('on'))place()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&P.classList.contains('on'))open(false)});
@@ -994,7 +1061,7 @@ function drag(h,fn){h.addEventListener('pointerdown',e=>{if(e.target.closest('bu
  h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up)})}
 drag($c('cbH'),(dx,dy,r)=>{P.style.left=cl(r.left+dx,0,innerWidth-r.width)+'px';P.style.top=cl(r.top+dy,0,innerHeight-r.height)+'px'});
 drag($c('cbR'),(dx,dy,r)=>{P.style.width=cl(r.width+dx,260,innerWidth-r.left)+'px';P.style.height=cl(r.height+dy,300,innerHeight-r.top)+'px'});
-function hello(){M.textContent='';add('b','안녕하세요, 봄이 가족 재무 에이전트 챗봇입니다. 아래 자주 하는 질문을 선택해 주십시오. 답변의 "상세 페이지" 버튼을 누르면 해당 내용이 있는 쪽으로 이동합니다.');M.scrollTop=0}
+function hello(){M.textContent='';add('b',[T('안녕하세요, 봄이 가족 재무 에이전트 챗봇입니다. 아래 자주 하는 질문을 선택하면 실제 숫자와 차트로 답변드립니다. "상세 페이지" 버튼을 누르면 해당 내용이 있는 쪽으로 이동합니다.')]);M.scrollTop=0}
 hello();$c('cbC').addEventListener('click',()=>{hello();$c('cbI').value='';$c('cbI').focus({preventScroll:true})});
 });
 </script><section id="cbP" role="dialog" aria-label="재무 에이전트 챗봇"><div id="cbH"><span class="t">💬 봄이 챗봇</span><span class="g">끌어서 이동</span><button id="cbC" type="button" aria-label="대화 초기화" title="대화 초기화">🗑 초기화</button><button id="cbX" type="button" aria-label="챗봇 닫기">✕</button></div><div id="cbM" aria-live="polite"></div><div id="cbQ" aria-label="자주 하는 질문"></div><form id="cbF" autocomplete="off"><input id="cbI" type="text" placeholder="질문을 입력하세요 (예: 주식, 부동산)" aria-label="질문 입력"><button type="submit">보내기</button></form><div id="cbR" role="separator" aria-label="크기 조절" title="끌어서 크기 조절"></div></section>
