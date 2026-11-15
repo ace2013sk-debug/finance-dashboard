@@ -188,6 +188,13 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 .cbc{margin:6px 0;border:2px solid var(--ink);background:#fff;padding:4px}.cbk{font-size:12px;font-weight:700;margin:2px 4px 4px}.cbc svg{display:block;width:100%;height:auto;min-width:0}
 #tip{z-index:60!important}
 #cbR{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,var(--ink) 50%,var(--ink) 58%,transparent 58%,transparent 72%,var(--ink) 72%,var(--ink) 80%,transparent 80%)}
+/* BG-UNIFY: 1~4번 대시보드와 같은 배경(그라데이션) 덮어쓰기 — 시작 */
+html,body{background-color:#fff!important}
+body{background-image:radial-gradient(circle at 14% 10%,rgba(64,93,230,.13),rgba(0,0,0,0) 34%),radial-gradient(circle at 88% 18%,rgba(225,48,108,.1),rgba(0,0,0,0) 32%),linear-gradient(135deg,rgba(64,93,230,.08),rgba(252,175,69,.12),rgba(225,48,108,.08))!important;background-attachment:fixed!important}
+.wrap{background:linear-gradient(135deg,rgba(64,93,230,.05),rgba(252,175,69,.08),rgba(225,48,108,.05))!important}
+.sidebar{background:rgba(255,255,255,.82)!important;-webkit-backdrop-filter:blur(14px)!important;backdrop-filter:blur(14px)!important;border-right:1.5px solid rgba(64,93,230,.14)!important}
+#cbW{background:rgba(255,255,255,.82)!important}
+/* BG-UNIFY: 끝 */
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="coinie" viewBox="0 0 100 100" data-c="1"><circle cx="50" cy="52" r="34" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="50" cy="52" r="25" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5"/><circle cx="41" cy="50" r="3.5" fill="#0A0A0A"/><circle cx="59" cy="50" r="3.5" fill="#0A0A0A"/><path d="M44 58 Q50 64 56 58" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="35" cy="57" r="3" fill="#FFB4B4"/><circle cx="65" cy="57" r="3" fill="#FFB4B4"/></symbol>
