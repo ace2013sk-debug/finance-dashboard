@@ -49,8 +49,8 @@ svg text{font-family:inherit;fill:var(--ink)}
 .lg{display:flex;gap:14px;font-size:13px;margin:0 0 6px;flex-wrap:wrap}.lg i{display:inline-block;width:14px;height:14px;border:2px solid var(--ink);vertical-align:-2px;margin-right:4px}
 .nc{color:#d40000;font-weight:700}
 ul.fl{margin:4px 0 0;padding-left:20px;font-size:14px}
-.xtb{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 8px;font-size:13px}
-.xtb .g{display:flex;gap:4px;align-items:center;flex-wrap:wrap;border:2px solid var(--ink);padding:3px 6px;background:#fff}
+.xtb{display:flex;flex-wrap:wrap;gap:6px 6px;align-items:center;margin:0 0 8px;font-size:13px}
+.xtb .g{display:flex;gap:4px;align-items:center;flex-wrap:nowrap;flex:none;white-space:nowrap;border:2px solid var(--ink);padding:3px 6px;background:#fff}
 .xtb b{font-size:12px}
 .xtb button,.xtb select{font:inherit;font-size:12.5px;font-weight:700;border:2px solid var(--ink);background:#fff;padding:2px 8px;cursor:pointer;color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
 .xtb button:hover{background:var(--yel)}.xtb button.p{background:var(--mint)}
@@ -796,10 +796,10 @@ function xMount(o){if(!X.init)xInit();
  const mxR=Math.max(...X.GR.map(g=>g.L),0),mxC=Math.max(...X.GC.map(g=>g.L),0);
  const lv=(p,m)=>Array.from({length:m+1},(_,i)=>`<button data-a="${p}${i+1}">${i+1}</button>`).join('');
  o.innerHTML=(X.back?`<div class="bk"><button data-a="bk">← 대시보드로 돌아가기</button><span>${X.pinMsg||''}</span></div>`:'')+`<p class="msg">재무 엑셀 <b style="background:var(--yel)">1.리뷰_26년</b> 시트입니다(1~109행). 대시보드 숫자를 만드는 <b style="background:#fffbe6;border:2px dotted #b59b2a">노란색 행·열</b>(${XH+1}~${XH+GEN_R}행, ${colL(XM+1)}~${colL(XM+GEN_C)}열)은 모두 수식입니다. 엑셀처럼 <b style="background:var(--mint)">그룹 +/− 단추</b>로 행·열을 접고 펴고, 셀을 선택하면 아래에 합계·평균이 나옵니다.</p>
- <div class="xtb"><div class="g"><b>행 단계</b>${lv('lr',mxR)}</div><div class="g"><b>열 단계</b>${lv('lc',mxC)}</div>
- <div class="g"><b>숨기기</b><button data-a="hr">선택 행 숨기기</button><button data-a="hc">선택 열 숨기기</button><button data-a="sr">행 숨기기 취소</button><button data-a="sc">열 숨기기 취소</button><button data-a="sa">모두 표시</button></div>
- <div class="g"><b>계산</b><select id="xfn" aria-label="함수"><option>SUM</option><option>AVERAGE</option><option>COUNT</option><option>MAX</option><option>MIN</option></select><label style="font-size:12.5px"><input type="checkbox" id="xvis"> 보이는 셀만</label><button class="p" data-a="fr">선택 영역 → 계산 행 추가</button><button class="p" data-a="fc">선택 영역 → 계산 열 추가</button><button id="xfv" data-a="fv">수식 보기: 끔</button></div>
- <div class="g"><button data-a="ar">빈 행 추가</button><button data-a="ac">빈 열 추가</button><button data-a="cl">내가 추가한 행·열 삭제</button><button data-a="hs" title="가로 스크롤을 맨 앞(A~G열 바로 옆 T열)으로 되돌립니다">◀ 가로 맨 앞으로</button><button data-a="rs">처음 상태</button></div></div>
+ <div class="xtb"><div class="g"><b>단계</b><span>행</span>${lv('lr',mxR)}<span>열</span>${lv('lc',mxC)}</div>
+ <div class="g"><b>숨기기</b><button data-a="hr" title="선택한 행 숨기기">행</button><button data-a="hc" title="선택한 열 숨기기">열</button><button data-a="su" title="선택 영역의 숨긴 행·열 다시 표시">선택 취소</button><button data-a="sa" title="숨긴 행·열 모두 표시">모두 표시</button></div>
+ <div class="g"><b>계산</b><select id="xfn" aria-label="함수"><option>SUM</option><option>AVERAGE</option><option>COUNT</option><option>MAX</option><option>MIN</option></select><label style="font-size:12.5px"><input type="checkbox" id="xvis"> 보이는 셀만</label><button class="p" data-a="fr" title="선택 영역 → 계산 행 추가">행 추가</button><button class="p" data-a="fc" title="선택 영역 → 계산 열 추가">열 추가</button></div>
+ <div class="g"><b>추가·보기</b><button data-a="ar" title="빈 행 추가">빈 행</button><button data-a="ac" title="빈 열 추가">빈 열</button><button id="xfv" data-a="fv">수식 보기: 끔</button><button data-a="cl" title="내가 추가한 행·열 삭제">추가분 삭제</button><button data-a="hs" title="가로 스크롤을 맨 앞(A~G열 바로 옆 T열)으로 되돌립니다">◀ 맨 앞</button><button data-a="rs">처음 상태</button></div></div>
  <div class="xfb"><span id="xnm"></span><input id="xfx" type="text" aria-label="수식 입력줄" autocomplete="off" spellcheck="false"></div>
  <div class="xw" id="xw" tabindex="0"></div><div class="xsb" id="xst"></div>
  <p class="sub" style="margin-top:6px">원본 셀을 선택하면 입력줄에 수식(VLOOKUP·SUM 등)이 보이고, <b>수식 보기</b>를 켜면 모든 셀이 수식으로 표시됩니다. 노란 행·열에서는 <b>=SUM(CU11:DF11)</b>, <b>=AVERAGE(...)</b>, <b>=SUBTOTAL(109,...)</b>, <b>=CU11+CV11</b> 같은 수식을 직접 입력할 수 있습니다. 원본 시트 셀은 수정할 수 없고, 새로고침하면 처음 상태로 돌아갑니다. 연 소계 열(예: DK)은 월별 합계와 다를 수 있어 대시보드는 월별 값을 사용합니다. 상태 표시줄 합계는 보이는 셀만 계산합니다.</p>`;
@@ -883,6 +883,7 @@ function act(a){
  else if(a==='hc'){colsOfSel().forEach(c=>X.manC.add(c))}
  else if(a==='sr'){const rs=rowsOfSel();if(rs.length){const [lo,hi]=showSpan(rs);for(let r=Math.max(1,lo);r<=hi;r++)X.manR.delete(r);X.GR.forEach(g=>{if(g.s<=hi&&g.e>=lo)X.coll['r'+g.id]=false})}}
  else if(a==='sc'){const cs=colsOfSel();if(cs.length){const [lo,hi]=showSpan(cs);for(let c=Math.max(1,lo);c<=hi;c++)X.manC.delete(c);X.GC.forEach(g=>{if(g.s<=hi&&g.e>=lo)X.coll['c'+g.id]=false})}}
+ else if(a==='su'){act('sr');return act('sc')}
  else if(a==='sa'){[...X.manR].filter(r=>r<=XR).forEach(r=>X.manR.delete(r));[...X.manC].filter(c=>c<=XM).forEach(c=>X.manC.delete(c));Object.keys(X.coll).forEach(k=>X.coll[k]=false)}
  else if(a==='ar'){X.nUR++;const r=XH+X.nUR;X.U[r+',4']='사용자 행 '+X.nUR;X.sel=[{r1:r,c1:4,r2:r,c2:4}];X.act={r,c:4};X.anchor={r,c:4}}
  else if(a==='ac'){X.nUC++;const c=XM+X.nUC;X.U[`6,${c}`]='사용자 열 '+X.nUC;X.sel=[{r1:6,c1:c,r2:6,c2:c}];X.act={r:6,c};X.anchor={r:6,c}}
