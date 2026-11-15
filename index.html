@@ -934,7 +934,7 @@ addP(4,'📑 리뷰 시트','sheet',0);
 addP(5,'📘 사용 매뉴얼','man',0);
 addP(6,'📙 제작 매뉴얼','mk',0);
 const PG=()=>PAGES[st.page]||PAGES[0];
-const SB={cl:{}};
+const SB={cl:{}};GRP.forEach((_,g)=>{SB.cl[g]=true});/* 첫 화면: 목차 7개 묶음 모두 접힘 */
 const isCl=g=>SB.cl[g]===undefined?g!==PG().g:SB.cl[g];
 function buildSide(){const cur=st.page;
  $('#sbl').innerHTML=GRP.map(([name,col],gi)=>{const items=PAGES.map((p,i)=>[p,i]).filter(([p])=>p.g===gi),has=PG().g===gi,cl=isCl(gi);
