@@ -159,7 +159,9 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 #tg option{background:#fff;color:var(--ink)}
 #out.manp{display:flex;flex-direction:column;overflow:hidden}#manf{flex:1;width:100%;min-height:200px;border:5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);background:#fff}
 /* ===== 챗봇: 자주 하는 질문 10개 · 상세 페이지 이동 · 이동/크기 조절 ===== */
-#cbL{position:fixed;right:18px;bottom:18px;z-index:50;font:inherit;font-weight:900;font-size:15px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 16px;cursor:pointer}
+.sidebar{display:flex;flex-direction:column}.sidebar>#sbl{flex:none}
+#cbW{margin-top:auto;position:sticky;bottom:-20px;background:var(--bg);padding:10px 0 20px}
+#cbL{display:block;width:100%;font:inherit;font-weight:900;font-size:15px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:8px 10px;cursor:pointer}
 #cbL:hover{background:var(--mint)}
 #cbP{position:fixed;z-index:51;display:none;flex-direction:column;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);min-width:260px;min-height:300px;max-width:96vw;max-height:96vh;overflow:hidden}
 #cbP.on{display:flex}
@@ -181,7 +183,6 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 #cbF input{flex:1;min-width:0;font:inherit;font-size:14px;border:2px solid var(--ink);padding:6px 8px}
 #cbF button{font:inherit;font-weight:800;border:2px solid var(--ink);background:var(--yel);cursor:pointer;padding:6px 12px;color:var(--ink)}
 #cbR{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,var(--ink) 50%,var(--ink) 58%,transparent 58%,transparent 72%,var(--ink) 72%,var(--ink) 80%,transparent 80%)}
-@media(max-width:600px){#cbL{right:10px;bottom:10px}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="coinie" viewBox="0 0 100 100" data-c="1"><circle cx="50" cy="52" r="34" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="50" cy="52" r="25" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5"/><circle cx="41" cy="50" r="3.5" fill="#0A0A0A"/><circle cx="59" cy="50" r="3.5" fill="#0A0A0A"/><path d="M44 58 Q50 64 56 58" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="35" cy="57" r="3" fill="#FFB4B4"/><circle cx="65" cy="57" r="3" fill="#FFB4B4"/></symbol>
@@ -190,7 +191,7 @@ h1{font-size:clamp(17px,3.2vh,24px);padding:4px 12px}
 <symbol id="tree" viewBox="0 0 100 100" data-c="1"><rect x="43" y="56" width="14" height="34" fill="#FFE29A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="50" cy="40" r="28" fill="#7EF0A5" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="42" cy="36" r="3" fill="#0A0A0A"/><circle cx="58" cy="36" r="3" fill="#0A0A0A"/><path d="M45 46 Q50 51 55 46" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/></symbol>
 <symbol id="duck" viewBox="0 0 100 100" data-c="1"><ellipse cx="46" cy="66" rx="30" ry="22" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="66" cy="38" r="18" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M80 40 L94 44 L80 50Z" fill="#FF6B45" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="68" cy="34" r="3" fill="#0A0A0A"/><path d="M30 64 Q44 76 56 62" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/></symbol>
 <symbol id="flower" viewBox="0 0 100 100" data-c="1"><path d="M50 52 V92" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M50 78 C36 78 30 68 32 62 C44 62 50 68 50 78Z" fill="#7EF0A5" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="50" cy="26" r="11" fill="#FFDCDC" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="68" cy="40" r="11" fill="#FFDCDC" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="32" cy="40" r="11" fill="#FFDCDC" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="40" cy="56" r="11" fill="#FFDCDC" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="60" cy="56" r="11" fill="#FFDCDC" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="50" cy="42" r="10" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/></symbol>
-</defs></svg><aside class="sidebar" id="sb" aria-label="목차"><button class="tag" id="sbtoc" type="button" title="클릭: 세부 목차 전체 펼치기/접기" aria-label="목차 전체 펼치기/접기">📚 목차</button><div id="sbl"></div></aside><div class="wrap">
+</defs></svg><aside class="sidebar" id="sb" aria-label="목차"><button class="tag" id="sbtoc" type="button" title="클릭: 세부 목차 전체 펼치기/접기" aria-label="목차 전체 펼치기/접기">📚 목차</button><div id="sbl"></div><div id="cbW"><button id="cbL" type="button" aria-haspopup="dialog" aria-controls="cbP" aria-expanded="false">💬 챗봇</button></div></aside><div class="wrap">
 <div class="top"><div class="lf"><h1>봄이 가족 재무 에이전트</h1><select id="tg" aria-label="대상"></select><div class="seg" id="cmp" role="group" aria-label="비교 기준"><button data-c="prev" aria-pressed="true">전월과 비교</button><button data-c="avg" aria-pressed="false">연평균과 비교</button></div></div>
 <div class="ctl"><div class="dots" id="dots" role="group" aria-label="쪽 이동 점"></div><button class="tb" id="sbt" aria-expanded="true" aria-label="사이드바 접기·열기">☰ 목록</button><div class="seg" id="pgnav" role="group" aria-label="쪽 이동"><button id="prv" aria-label="이전 쪽">◀ 이전</button><button id="nxt" aria-label="다음 쪽">다음 ▶</button></div>
 </div></div>
@@ -981,9 +982,9 @@ $c('cbF').addEventListener('submit',e=>{e.preventDefault();const i=$c('cbI'),v=i
 const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
 function place(){const r=P.getBoundingClientRect(),w=Math.min(r.width,innerWidth-8),h=Math.min(r.height,innerHeight-8);
  P.style.width=w+'px';P.style.height=h+'px';P.style.left=cl(r.left,0,innerWidth-w)+'px';P.style.top=cl(r.top,0,innerHeight-h)+'px'}
-function open(o){P.classList.toggle('on',o);L.style.display=o?'none':'';L.setAttribute('aria-expanded',o);
+function open(o){P.classList.toggle('on',o);L.setAttribute('aria-expanded',o);
  if(o){if(!P.style.left){const w=Math.min(380,innerWidth-16),h=Math.min(520,innerHeight-16);P.style.width=w+'px';P.style.height=h+'px';P.style.left=(innerWidth-w-18)+'px';P.style.top=(innerHeight-h-18)+'px'}else place();$c('cbI').focus({preventScroll:true})}}
-L.addEventListener('click',()=>open(true));$c('cbX').addEventListener('click',()=>open(false));
+L.addEventListener('click',()=>open(!P.classList.contains('on')));$c('cbX').addEventListener('click',()=>open(false));
 addEventListener('resize',()=>{if(P.classList.contains('on'))place()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&P.classList.contains('on'))open(false)});
 function drag(h,fn){h.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;e.preventDefault();const r=P.getBoundingClientRect(),sx=e.clientX,sy=e.clientY;h.setPointerCapture(e.pointerId);
@@ -993,6 +994,5 @@ drag($c('cbH'),(dx,dy,r)=>{P.style.left=cl(r.left+dx,0,innerWidth-r.width)+'px';
 drag($c('cbR'),(dx,dy,r)=>{P.style.width=cl(r.width+dx,260,innerWidth-r.left)+'px';P.style.height=cl(r.height+dy,300,innerHeight-r.top)+'px'});
 add('b','안녕하세요, 봄이 가족 재무 에이전트 챗봇입니다. 아래 자주 하는 질문을 선택해 주십시오. 답변의 "상세 페이지" 버튼을 누르면 해당 내용이 있는 쪽으로 이동합니다.');
 });
-</script><button id="cbL" type="button" aria-haspopup="dialog" aria-controls="cbP" aria-expanded="false">💬 챗봇</button>
-<section id="cbP" role="dialog" aria-label="재무 에이전트 챗봇"><div id="cbH"><span class="t">💬 봄이 챗봇</span><span class="g">끌어서 이동</span><button id="cbX" type="button" aria-label="챗봇 닫기">✕</button></div><div id="cbM" aria-live="polite"></div><div id="cbQ" aria-label="자주 하는 질문"></div><form id="cbF" autocomplete="off"><input id="cbI" type="text" placeholder="질문을 입력하세요 (예: 주식, 부동산)" aria-label="질문 입력"><button type="submit">보내기</button></form><div id="cbR" role="separator" aria-label="크기 조절" title="끌어서 크기 조절"></div></section>
+</script><section id="cbP" role="dialog" aria-label="재무 에이전트 챗봇"><div id="cbH"><span class="t">💬 봄이 챗봇</span><span class="g">끌어서 이동</span><button id="cbX" type="button" aria-label="챗봇 닫기">✕</button></div><div id="cbM" aria-live="polite"></div><div id="cbQ" aria-label="자주 하는 질문"></div><form id="cbF" autocomplete="off"><input id="cbI" type="text" placeholder="질문을 입력하세요 (예: 주식, 부동산)" aria-label="질문 입력"><button type="submit">보내기</button></form><div id="cbR" role="separator" aria-label="크기 조절" title="끌어서 크기 조절"></div></section>
 <div id="xcm"></div></body></html>
