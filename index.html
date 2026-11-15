@@ -971,12 +971,14 @@ $('#dots').addEventListener('click',e=>{const b=e.target.closest('.d');if(b)setP
 $('#prv').addEventListener('click',()=>setPage(st.page-1));$('#nxt').addEventListener('click',()=>setPage(st.page+1));
 document.addEventListener('keydown',e=>{if(st.mode==='sheet'||e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|SELECT|TEXTAREA)$/.test((document.activeElement||{}).tagName||''))return;
  if(e.key==='ArrowLeft'){setPage(st.page-1);e.preventDefault()}else if(e.key==='ArrowRight'){setPage(st.page+1);e.preventDefault()}});
-function setSb(o){document.body.classList.toggle('sb',o);$('#sbt').setAttribute('aria-expanded',o)}
+function placePh(){const lf=$('.lf');if(!lf)return;lf.querySelectorAll('.ph.moved').forEach(e=>e.remove());const src=$('#out .ph');if(!src)return;
+ if(document.body.classList.contains('sb')){const c=src.cloneNode(true);c.removeAttribute('id');c.classList.add('moved');c.style.margin='0';src.style.display='none';lf.insertBefore(c,lf.firstChild)}else src.style.display=''}
+function setSb(o){document.body.classList.toggle('sb',o);$('#sbt').setAttribute('aria-expanded',o);placePh()}
 $('#sbt').addEventListener('click',()=>setSb(!document.body.classList.contains('sb')));
 document.addEventListener('keydown',e=>{if((e.key==='s'||e.key==='S')&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!/^(INPUT|SELECT|TEXTAREA)$/.test((document.activeElement||{}).tagName||'')&&st.mode!=='sheet'){setSb(!document.body.classList.contains('sb'))}});
 setSb(innerWidth>900);
 function typeH1(){const h=$('h1');const s=h.dataset.t||(h.dataset.t=h.textContent);h.setAttribute('aria-label',s);if(RM){h.textContent=s;return}h.innerHTML=[...s].map((c,i)=>`<span style="animation-delay:${(i*.06).toFixed(2)}s">${c===' '?'&nbsp;':c}</span>`).join('')+'<i class="cur"></i>'}
-function postRender(){buildSide();$('#dots').innerHTML=PAGES.map((p,i)=>`<button class="d${i===st.page?' on':''}" data-i="${i}" title="${i+1}. ${p.t}" aria-label="${i+1}쪽 ${p.t}"${i===st.page?' aria-current="page"':''}></button>`).join('')+`<span class="pgn" aria-live="polite">${st.page+1} / ${PAGES.length}</span>`;$('#prv').disabled=st.page===0;$('#nxt').disabled=st.page===PAGES.length-1;
+function postRender(){buildSide();placePh();$('#dots').innerHTML=PAGES.map((p,i)=>`<button class="d${i===st.page?' on':''}" data-i="${i}" title="${i+1}. ${p.t}" aria-label="${i+1}쪽 ${p.t}"${i===st.page?' aria-current="page"':''}></button>`).join('')+`<span class="pgn" aria-live="polite">${st.page+1} / ${PAGES.length}</span>`;$('#prv').disabled=st.page===0;$('#nxt').disabled=st.page===PAGES.length-1;
  if(st.mode==='sheet')return;typeH1();
  document.querySelectorAll('#out svg').forEach(s=>{let i=0,j=0,k=0;s.querySelectorAll('rect[data-t]').forEach(r=>{r.style.setProperty('--i',Math.min(i++,10))});
   s.querySelectorAll('text.val').forEach(r=>{r.style.setProperty('--i',Math.min(j++,10))});s.querySelectorAll('circle').forEach(r=>{r.style.setProperty('--i',Math.min(k++,80))})})}
