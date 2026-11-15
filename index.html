@@ -736,6 +736,7 @@ function xInit(){X.GR=mkGroups(SH.rows,XR);X.GC=mkGroups(SH.cols,XM);X.coll={};
  X.GR.forEach(g=>X.coll['r'+g.id]=!!(SH.rows[g.sum]&&SH.rows[g.sum].coll));
  X.GC.forEach(g=>X.coll['c'+g.id]=!!(SH.cols[g.sum]&&SH.cols[g.sum].coll)||(g.s<=86&&g.e>=97));
  X.manR=new Set(Object.entries(SH.rows).filter(([r,m])=>m.hid&&!m.lvl).map(([r])=>+r));
+ [1,2,3].forEach(r=>X.manR.add(r)); /* 기본 상태: 1~3행 숨김(모두 표시·단계로 다시 표시 가능) */
  X.manC=new Set(Object.entries(SH.cols).filter(([c,m])=>m.hid&&!m.lvl).map(([c])=>+c));
  if(!X.G)X.G=buildGen();X.nUR=GEN_R;X.nUC=GEN_C;X.U={...X.G};X.sel=[{r1:7,c1:7,r2:7,c2:7}];X.anchor={r:7,c:7};X.act={r:7,c:7};X.memo=new Map();X.sm=new Map();X.pin=null;X.init=true}
 const hiddenR=r=>{if(X.manR.has(r))return true;if(r>XR)return r<=XH;for(const g of X.GR)if(g.s<=r&&r<=g.e&&X.coll['r'+g.id])return true;return false};
