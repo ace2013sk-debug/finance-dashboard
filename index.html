@@ -215,7 +215,7 @@ html body .sidebar::-webkit-scrollbar-track{background:rgba(64,93,230,.06);borde
 html body .sidebar::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(225,48,108,.56),rgba(131,58,180,.42));border:2px solid rgba(255,255,255,.74);border-radius:999px}
 /* BRAND-UNIFY: 끝 */
 
-.cmw{display:flex;gap:14px;align-items:flex-start}.cmc{flex:1;min-width:0}.nmemo{flex:0 0 236px;columns:2;column-gap:14px;padding:2px 0 0 12px;border-left:2px dashed #bbb;font-size:12.5px;line-height:1.75;color:#444}.nmemo b{display:block;column-span:all;font-size:13px;color:#111;margin-bottom:4px}.nmemo span{display:block;white-space:nowrap;break-inside:avoid}@media(max-width:700px){.cmw{flex-direction:column}.nmemo{flex:none;border-left:0;border-top:2px dashed #bbb;padding:8px 0 0;columns:2;width:100%}.nmemo b{column-span:all}}
+.cmw{display:flex;gap:14px;align-items:flex-start}.cmc{flex:1;min-width:0}.nmemo{flex:0 0 210px;padding:2px 0 0 12px;border-left:2px dashed #bbb;font-size:12.5px;line-height:1.75;color:#444}.nmemo b{display:block;column-span:all;font-size:13px;color:#111;margin-bottom:4px}.nmemo span{display:block;white-space:nowrap;break-inside:avoid}@media(max-width:700px){.cmw{flex-direction:column}.nmemo{flex:none;border-left:0;border-top:2px dashed #bbb;padding:8px 0 0;width:100%}.nmemo b{column-span:all}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="coinie" viewBox="0 0 100 100" data-c="1"><circle cx="50" cy="52" r="34" fill="#FFE81A" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="50" cy="52" r="25" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5"/><circle cx="41" cy="50" r="3.5" fill="#0A0A0A"/><circle cx="59" cy="50" r="3.5" fill="#0A0A0A"/><path d="M44 58 Q50 64 56 58" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3"/><circle cx="35" cy="57" r="3" fill="#FFB4B4"/><circle cx="65" cy="57" r="3" fill="#FFB4B4"/></symbol>
@@ -673,8 +673,8 @@ function cumView(){
  const rc=id=>{let t=0;return mx.map((m,i)=>t+=(RX(id)[i]||0))};
  const labs=mx.map(m=>'20'+m.replace('.','년 ')+'월');
  let h='<div class="phw"><h2 class="ph" style="background:var(--mint,#7EF0A5)">📊 1. 전체 요약 (누적)</h2><span class="sub" style="font-weight:700;margin:0">2019년 1월부터 2026년 10월까지 월 값을 쌓은 누적 추이와 연도별 누적(합계)입니다. 연 단위로만 입력된 값(부동산 시세상승 등)은 해당 연도 12월에 반영했습니다. 26년은 1~10월 누적입니다.</span></div>';
- const cv=rc(7),mxv=Math.max(...cv),ml=[];for(let t=1;t*1e8<=mxv;t++){const k=cv.findIndex(x=>x>=t*1e8);if(k>=0)ml.push(t+'억 달성 ('+'20'+mx[k].split('.')[0]+')')}
- const memo='<aside class="nmemo"><b>순자산</b>'+ml.map(s=>'<span>'+s+'</span>').join('')+'</aside>';
+ const cv=rc(7),mxv=Math.max(...cv),ml=[];for(let t=1;t*1e8<=mxv;t++){const k=cv.findIndex(x=>x>=t*1e8);if(k>=0){const y='20'+mx[k].split('.')[0]+'년';const g=ml.find(o=>o.y===y);if(g)g.t.push(t+'억');else ml.push({y,t:[t+'억']})}}
+ const memo='<aside class="nmemo"><b>순자산</b>'+ml.map(o=>'<span>'+o.y+': '+o.t.join(', ')+' 달성</span>').join('')+'</aside>';
  h+=card('전체 결과 누적 추이 (2019.1부터)','점에 마우스를 올리면 그 달까지의 누적 금액이 보입니다','<div class="cmw"><div class="cmc">'+line(rc(7),labs,{h:230,w:960,xl,pl:48,hi:true,col:C.A,refs:mx.map((m,i)=>'7,'+RCc(i))})+'</div>'+memo+'</div>','full');
  const cats=ys.map(y=>({n:y+'년',b:[[8,'월급−쓴 돈',C.A],[23,'집(쉐어) 사업',C.B],[96,'투자 수입',C.up]].map(([id,nm,col])=>({v:sm(id,yids(y)),c:col,r:id+','+YCc(y),t:`${y}년 ${nm} 누적: ${won(sm(id,yids(y)))}`}))}));
  h+='<div class="grid">'+card('연도별 누적',`<div class="lg"><span><i style="background:${C.A}"></i>월급−쓴 돈</span><span><i style="background:${C.B}"></i>집(쉐어) 사업</span><span><i style="background:${C.up}"></i>투자 수입</span></div>26년은 1~10월 누적입니다.`,bars(cats,{lab:false}));
